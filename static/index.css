@@ -1,0 +1,477 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    /* color: azure; */
+
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+/* стилизация содержимого страницы */
+body {
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #292b2c;
+    background-image: linear-gradient(to left, rgba(124, 146, 255, 0.664), rgba(0, 3, 175, 0.573));
+}
+
+/* свойства модального окна по умолчанию */
+.modal-open {
+    color: white;
+    border-style: solid;
+    border-radius: 5PX;
+    border-color: aliceblue;
+    margin-left: 45%;
+}
+.modal-open-menu {
+    color: white;
+    border-style: solid;
+    border-radius: 5PX;
+    border-color: aliceblue;
+    /* margin-left: 45%; */
+}
+
+.modal {
+    position: fixed;
+    /* фиксированное положение */
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.5);
+    /* цвет фона */
+    z-index: 1050;
+    opacity: 0;
+    /* по умолчанию модальное окно прозрачно */
+    -webkit-transition: opacity 200ms ease-in;
+    -moz-transition: opacity 200ms ease-in;
+    transition: opacity 200ms ease-in;
+    /* анимация перехода */
+    pointer-events: none;
+    /* элемент невидим для событий мыши */
+    margin: 0;
+    padding: 0;
+}
+
+/* при отображении модального окно */
+.modal:target {
+    opacity: 1;
+    /* делаем окно видимым */
+    pointer-events: auto;
+    /* элемент видим для событий мыши */
+    overflow-y: auto;
+    /* добавляем прокрутку по y, когда элемент не помещается на страницу */
+}
+
+/* ширина модального окна и его отступы от экрана */
+.modal-dialog {
+    position: relative;
+    width: auto;
+    margin: 10px;
+}
+
+@media (min-width: 576px) {
+    .modal-dialog {
+        max-width: 500px;
+        margin: 30px auto;
+        /* для отображения модального окна по центру */
+    }
+}
+
+/* свойства для блока, содержащего контент модального окна */
+.modal-content {
+    position: relative;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    background-color: #fff;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, .2);
+    border-radius: .3rem;
+    outline: 0;
+}
+
+@media (min-width: 768px) {
+    .modal-content {
+        -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+    }
+}
+
+/* свойства для заголовка модального окна */
+.modal-header {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    padding: 15px;
+    border-bottom: 1px solid #eceeef;
+}
+
+.modal-title {
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 1.5;
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
+/* свойства для кнопки "Закрыть" */
+.close {
+    float: right;
+    font-family: sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .5;
+    text-decoration: none;
+}
+
+/* свойства для кнопки "Закрыть" при нахождении её в фокусе или наведении */
+.close:focus,
+.close:hover {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+    opacity: .75;
+}
+
+/* свойства для блока, содержащего основное содержимое окна */
+.modal-body {
+    position: relative;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 15px;
+    overflow: auto;
+}
+
+
+
+
+.header {
+    position: relative;
+    top: 100;
+    left: 0;
+    width: 100%;
+    padding: 1.3rem 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* background: rgba(255, 93, 93, 0.979); */
+    /* background-image: linear-gradient(to left, rgba(124, 146, 255, 0.664), rgba(0, 3, 175, 0.573)); */
+    
+    backdrop-filter: blur(5px);
+    z-index: -1;
+}
+
+.header span {
+    color: greenyellow;
+    transition: .50s ease;
+}
+
+.name {
+    font-size: 190%;
+    color: white;
+    text-decoration: none;
+    font-weight: 520;
+}
+
+.navbar a {
+    font-size: 100%;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: 15px;
+    margin-right: 15px;
+    transition: .20s ease;
+}
+
+.navbar a:hover {
+    color: rgb(114, 82, 255);
+    transition: .20s ease;
+}
+
+.navbar span:hover {
+    color: rgb(114, 82, 255);
+    transition: .50s ease;
+}
+
+
+
+#check {
+    display: none;
+}
+
+.menu {
+    position: absolute;
+    right: 5%;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    display: none;
+}
+
+@media (max-width: 992px) {
+    .header {
+        padding: 1.3rem 5%;
+    }
+}
+
+@media (max-width: 760px) {
+    .menu {
+        display: inline-flex;
+    }
+
+    #check:checked~.menu #icon-menu {
+        display: none;
+    }
+
+    .menu #close-menu {
+        display: none;
+    }
+
+
+    #check:checked~.menu #close-menu {
+        display: block;
+    }
+
+    .navbar {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        height: 0;
+        background: rgba(172, 124, 255, 0.15);
+        backdrop-filter: blur(50px);
+        overflow: hidden;
+        transition: .2s ease;
+    }
+
+    #check:checked~.navbar {
+        height: 17rem;
+    }
+
+    .navbar a {
+        display: block;
+        font-size: 1rem;
+        margin: 1.5rem 0;
+        text-align: center;
+        transform: translateY(-50px);
+        transition: .2s ease;
+    }
+}
+
+.title {
+    display: grid;
+    margin-bottom: 0px;
+    margin-top: 15vh;
+    margin-left: 28vh;
+    color: aliceblue;
+}
+
+.title span {
+    color: greenyellow;
+}
+
+.profile {
+    display: flex;
+    padding: 2%;
+    margin-left: 20%;
+    margin-top: 3%;
+    margin-bottom: 100px;
+    width: 60%;
+    height: 100%;
+    background-color: rgba(5, 123, 165, 0.388);
+    /* border-color: brown; */
+    border-radius: 10px;
+    /* border-style: solid;     */
+}
+
+.profile__left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: none;
+    border-radius: 10px;
+    /* border-color: brown;
+    border-style: solid; */
+    width: 30%;
+    height: 100%;
+
+}
+
+.profile__left img {
+    width: 50%;
+    margin-top: 5%;
+}
+
+.profile__name {
+    color: aliceblue;
+    margin-top: 10px;
+    font-size: 100%;
+}
+
+
+.rating {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+}
+
+.like {
+    font-size: 20px;
+    color: rgb(0, 251, 0);
+}
+
+.like>.like__img {
+    width: 16px;
+}
+
+.dislike {
+    font-size: 20px;
+    color: red;
+}
+
+.dislike>.dislike__img {
+    width: 16px;
+}
+
+.author__span {
+    color: rgb(255, 43, 43);
+    font-weight: 800;
+}
+
+.fin_span {
+    color: greenyellow;
+}
+
+.beg_span {
+    color: rgb(255, 255, 255);
+}
+
+.author__student {
+    color: greenyellow;
+}
+
+.author {
+    margin-bottom: 10px;
+}
+
+
+.profile__right {
+    /* border-color: brown;
+    border-style: solid; */
+    border-radius: 10px;
+    width: 60%;
+    margin-left: 6%;
+    /* margin-right: 2%; */
+}
+
+.profile__started_courses {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: none;
+    border-radius: 3px;
+    border-color: white;
+    border-style: solid; 
+    margin: 10px;
+    padding: 5px;
+    padding-bottom: 10px;
+}
+
+.course_name a {
+    font-size: larger;
+    color: rgb(214, 238, 255);
+}
+
+.course_discription {
+    width: 300px;
+    /* border-color: #eceeef; */
+    border-style: solid;
+    border-radius: 5px;
+    font-size: small;
+    color: rgb(222, 222, 222);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    white-space: normal;
+    -webkit-box-orient: vertical;
+}
+
+
+.profile__started_courses img {
+    width: 50px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.work-time {
+    color: white;
+}
+
+
+.menu-coffee {
+    /* border-color: white;     */
+    border-radius: 5px;
+    border-style: solid;
+    text-align: center;
+}
+
+.rule {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    /* border-color: white;
+    border-radius: 5px;
+    border-style: solid; */
+    text-align: center;
+    display: flex;
+    justify-content: space-around;
+}
+.rule a {
+    border-color: white;
+    border-radius: 5px;
+    border-style: solid;
+}
+

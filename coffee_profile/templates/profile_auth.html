@@ -1,0 +1,103 @@
+{% extends "profile.html" %}
+
+{% block content %}
+<div id="openModalMenu" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Создание меню</h3>
+                <a href="#close" title="Close" class="close">×</a>
+            </div>
+            <div class="modal-body">
+                <form>
+                    Название меню: <input type='text' name='lastname'> <br>
+                    <button class="btn btn-success" type="submit"> Создать </button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="openModal" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Создание кофейни</h3>
+                <a href="#close" title="Close" class="close">×</a>
+            </div>
+            <div class="modal-body">
+                <form method="post" action='./add_coffee_house' class="form">
+                    {% csrf_token %}
+                    Название кофейни:
+                    {{coffee_form.name}}<br>
+                    График работы:
+                    {{coffee_form.schedule}}<br>
+                    
+                    Описание:<br>
+                    {{coffee_form.description}}<br>
+                    <button class="btn btn-success" type="submit"> Создать </button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- openModal - id модального окна (элемента div) -->
+<a href="#openModal" class="modal-open">Создать кофейню</a>
+
+<div class="title">
+    <h1>Ваш <span>Профиль</span> </h1>
+</div>
+<div class="profile">
+    <div class="profile__left">
+        <img src="static/icons/IT_courses_logo.png" alt="">
+        <div class="profile__name">{{user}}</div>
+        
+    </div>
+    <div class="profile__right">
+        <h3><span class="beg_span">Ваши кофейни</span> </h3>
+        <!-- Список кофеен -->
+        {% for coffee in form %}
+                    <div class="profile__started_course">
+                        
+                        <div class="course profile__started_courses">
+                            <img src="static/icons/Home.png" alt="">
+                            <div class="course_info">
+                                <div class="course_name">
+                                    <a href="">{{coffee}}</a>
+                                </div>
+                                <div>
+                                    {% if coffee.description %}
+                                    <div class="course_discription">
+                                        {{coffee.description}}
+                                    </div>
+                                    {% endif %}
+                                    <div class="work-time"> График работы: {{coffee.schedule}}</div>
+                                    <div class="rule">
+                                        <a href="#">Редактировать</a>
+                                        <a href="#">Удалить кофейню</a>
+                                    </div>
+                                    {% comment %} {% if menuslugs %}
+                                        {% for menu_slug in menuslugs %}
+                                            {% if menu_slug and coffee_house_slugs.coofee%}
+                                                {% with coffee_slug=coffee_house_slugs.coffee %}
+                                                   <div class="menu-coffee"> <a href="{% url "home:menu_detail" coffee_slug menuslugs.coffee_slug %}">Меню</a></div> 
+                                                {% endwith %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %} {% endcomment %}
+                                    <div class="rule">
+                                        <a href="#openModalMenu" class="modal-open-menu">Создать меню</a>
+                                        <a href="#">Редактировать</a>
+                                        <a href="#">Удалить меню</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+    </div>
+    
+</div>
+{% endblock content %}
