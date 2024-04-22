@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    <h1><span>{{ menu.name }}</span></h1>
+{% endblock title %}
+
+{% block content %}
+{% for item in menuitems %}
+<div class="card">
+    {% if item.photo %}
+        <a href="{% url "menu:item_detail" coffee_house_slug menu.slug item.slug%}"><img src="{% static item.photo %}" alt=""></a>
+    {% endif %}
+    <p><a href="{% url "menu:item_detail" coffee_house_slug menu.slug item.slug%}">{{item.name}}</a></p> <br>
+
+</div>
+{% endfor %}
+{% endblock content %}

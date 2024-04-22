@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    <form method="post" action='' class="form">
+        {% csrf_token %}
+        Название: {{form.name}}<br>
+        График работы: {{form.schedule}}<br>
+        Описание (необязательно): {{form.description}} <br>
+        <button type="submit"> Создать </button>
+    </form>
+    
+{% endblock content %}

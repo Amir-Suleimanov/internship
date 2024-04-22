@@ -19,8 +19,7 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('profile/', include('coffee_profile.urls', namespace='coffee_profile')),
-    path('user/', include('user.urls', namespace='user')),
-    path('', include('home.urls', namespace='home')),
+    path('', include('coffee_house.urls', namespace='coffee_house')),
+    path('<slug:coffee_house_slug>/menu', include('menu.urls', namespace='menu'))
 
 ]

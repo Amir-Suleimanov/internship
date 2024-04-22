@@ -38,9 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'coffee_profile',
-    'home',
-    'user',
+    'coffee_house',
+    'menu'
 ]
 
 MIDDLEWARE = [
