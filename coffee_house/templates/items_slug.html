@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block title_head %}
+<title>MenuItem</title>
+{% endblock  %}
+
 {% block title %}
     <h1><span>{{ menu.name }}</span></h1>
 {% endblock title %}
@@ -12,9 +16,13 @@
     {% endif %}
     <p>{{item.name}}</p>
     <p>Объём/количество: {{item.quantity}} {{item.unit}}</p>
-    <a href="{% url "menu:menu_detail" coffee_house_slug menu_slug%}">
-        <p>Меню: {{item.menu}}</p>
-    </a>
+    {% if user.is_authenticated and user.is_superuser %}
+        <form action="{% url "menu:item_edit" coffee_house_slug menu_slug item.id %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="coffee_house_slug" value="{{ menu.slug }}">
+            <button> Редактировать</button><br>
+        </form>
+    {% endif %}
 
 </div>
 {% endblock content %}

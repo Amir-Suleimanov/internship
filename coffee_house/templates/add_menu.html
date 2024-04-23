@@ -1,11 +1,15 @@
 {% extends "base.html" %}
 {% load static %}
+{% block title_head %}
+<title>Coffee menu add</title>
+{% endblock  %}
+
 
 {% block content %}
-    <form method="post" action='' class="form">
+    <form method="post" action='{% url "menu:add_menu" coffee_house_slug%}' class="form">
         {% csrf_token %}
-        Название: {{form.name}}<br>
-        Кофейня: {{form.coffee_house}}<br>
+        Название: <br>{{form.name}}<br><br>
+        Кофейня: <br>{{form.coffee_house}}<br><br>
         <button type="submit"> Создать </button>
     </form>
     

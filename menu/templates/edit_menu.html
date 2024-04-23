@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title_head %}
+<title>Menu Edit</title>
+{% endblock  %}
+
+{% block content %}
+<div class='two_forms'>
+<form method="post" action='{% url "menu:edit_menu" slugs.0 slugs.1 %}' class="form">
+    {% csrf_token %}
+    <input type="hidden" name="menu_slug" value="{{ slugs.1 }}">
+    Название: <br><input type="text" name="name" value="{{ menu.name }}"><br> <br>
+    Кофейня: <br>{{form.coffee_house}}<br>
+    <br><button type="submit"> Сохранить </button><br><br>
+</form>
+<form action="{% url "menu:delete_menu" slugs.0 slugs.1 %}" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="menu_slug" value="{{ menu.slug }}">
+    <button> Удалить меню</button><br>
+</form>
+</div>
+
+{% endblock content %}

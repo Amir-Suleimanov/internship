@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
-
+{% block title_head %}
+<title>Coffee add</title>
+{% endblock  %}
 {% block content %}
     <form method="post" action='' class="form">
         {% csrf_token %}

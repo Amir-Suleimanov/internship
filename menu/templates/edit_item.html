@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title_head %}
+<title>Item Edit</title>
+{% endblock  %}
+
+{% block content %}
+<div class='two_forms'>
+<form method="post" action='{% url "menu:item_edit" slugs.0 slugs.1 item.id%}' class="form">
+    {% csrf_token %}
+    <input type="hidden" name="item.slug" value="{{ item.slug }}">
+    Название: <br><input type="text" name="name" value="{{ item.name }}"><br> <br>
+    Объем/кол-во: <br><input type="number" name="quantity" value="{{ item.quantity }}"><br> <br>
+    Единица измерения: <br>{{ form.unit }}<br> <br>
+    Меню: <br>{{form.menu}}<br>
+    <br><button type="submit"> Сохранить </button><br><br>
+</form>
+<form action="{% url "menu:delete_item" slugs.0 slugs.1 item.id %}" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="item_slug" value="{{ item.slug }}">
+    <button> Удалить позицию</button><br>
+</form>
+</div>
+
+{% endblock content %}

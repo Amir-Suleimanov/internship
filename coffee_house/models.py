@@ -10,7 +10,7 @@ from pytils.translit import slugify
 
 class CoffeeHouse(models.Model):
     name = models.CharField(max_length=200, verbose_name='Название')    
-    slug = AutoSlugField(populate_from='name', unique=True, verbose_name='URL', slugify=slugify)
+    slug = AutoSlugField(populate_from='name', unique=True, verbose_name='URL', slugify=slugify, editable=True)
     schedule = models.CharField(max_length=200, verbose_name='График работы')
     creation_date = models.DateField(auto_now_add=True, verbose_name='Дата создания')
     description = models.TextField(blank=True, null=True, verbose_name='Описание')

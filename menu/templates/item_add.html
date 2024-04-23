@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title_head %}
+<title>Coffee item add</title>
+{% endblock  %}
+
+
+{% block content %}
+    <form method="post" action='{% url "menu:item_add" slugs.0 slugs.1 %}' class="form">
+        {% csrf_token %}
+        Название: <br>{{form.name}}<br>
+        Объем/Количество: <br>{{form.quantity}} <br>
+        Единица измерения: <br>{{form.unit}} <br>
+        Меню: <br>{{form.menu}} <br>
+        Фотография: <br>{{form.photo}} <br>
+        <button type="submit"> Создать </button>
+    </form>
+    
+{% endblock content %}

@@ -113,3 +113,16 @@ def delete_coffee_house(request, coffee_house_slug):
     coffee_house.delete()
     return HttpResponseRedirect(reverse('coffee_house:home'))
 
+def edit_coffee_house(request, coffee_house_slug):
+    coffee_house = get_object_or_404(CoffeeHouse, slug=coffee_house_slug)
+    if request.method == 'POST':
+        form = CoffeeHouseForm(request.POST, instance=coffee_house)
+        
+        if form.is_valid():
+            form.save()
+            return redirect('coffee_house:home')
+    else:
+        form = CoffeeHouseForm(instance=coffee_house)
+
+    context = {'form': form, 'coffee_house': coffee_house}
+    return render(request, 'edit_coffee_house.html', context)

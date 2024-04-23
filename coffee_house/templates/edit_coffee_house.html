@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title_head %}
+<title>CoffeeHouse Edit</title>
+{% endblock  %}
+
+
+{% block content %}
+<div class='two_forms'>
+    <form method="post" action='{% url "coffee_house:edit_coffee_house" coffee_house.slug %}' class="form">
+        {% csrf_token %}
+        <input type="hidden" name="slug" value="{{ coffee_house.slug }}">
+        Название: <br><input type="text" name="name" value="{{ coffee_house.name }}"><br>
+        График работы: <br> <input type="text" name="schedule" value="{{ coffee_house.schedule }}"><br>
+        Описание: <br> <textarea name="description" rows="3" cols="22"> {{coffee_house.description}}</textarea> <br>
+        <button type="submit"> Сохранить </button>
+    </form>
+    <br>
+    <form action="{% url "coffee_house:delete_coffee_house" coffee_house.slug %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="coffee_house_slug" value="{{ coffee_house.slug }}">
+        <button> Удалить кофейню</button><br>
+    </form>
+</div>
+{% endblock content %}

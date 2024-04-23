@@ -1,9 +1,17 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block title_head %}
+<title>Coffee House</title>
+{% endblock  %}
+
 {% block title %}
     <h1><span>CoffeeHouse</span></h1>
 {% endblock title %}
+
+{% block navbar_admin %}
+    <a href="{% url "coffee_house:add_coffee_house" %}"><span>Создать кофейню</span></a>
+{% endblock navbar_admin %}
 
 {% block content %}
     <!-- Все кофейни -->
@@ -18,10 +26,10 @@
             <p>Описание: {{Coffee.description}}</p>
         {% endif %}
         {% if user.is_authenticated and user.is_superuser %}
-            <form action="{% url "coffee_house:delete_coffee_house" Coffee.slug %}" method="post">
+            
+            <form action="{% url "coffee_house:edit_coffee_house" Coffee.slug %}" method="post">
                 {% csrf_token %}
                 <input type="hidden" name="coffee_house_slug" value="{{ Coffee.slug }}">
-                <button> Удалить </button><br>
                 <button> Редактировать</button><br>
             </form>
                 {% endif %}

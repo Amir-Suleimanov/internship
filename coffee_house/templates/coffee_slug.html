@@ -6,22 +6,53 @@
     <h1><span>{{coffee_house.name}}</span></h1>
 {% endblock title %}
 
+{% block navbar_admin %}
+<a href="{% url "menu:add_menu" coffee_house.slug%}"><span>Добавить меню</span></a>
+{% endblock navbar_admin %}
+
 {% block content %}
     {% if menus %}
-        {% for menu, items in menuitems.items %}
-            <a href="{% url "menu:menu_detail" coffee_house.slug menu.slug%}" class="menu-a">
-                <h2>{{menu.name}}</h2>
-            </a>
-            {% for item in items %}
-                <div class="card">
-                    {% if item.photo %}
-                        <a href="{% url "menu:item_detail" coffee_house.slug menu.slug item.slug%}"><img src="{% static item.photo %}" alt=""></a>
+            {% for menu, items in menuitems.items %}
+                {% if user.is_authenticated %}
+                    <div class="menu_btn">
+                        <a href="{% url "menu:menu_detail" coffee_house.slug menu.slug%}" class="menu-a">
+                            <h2>{{menu.name}}</h2>
+                        </a>
+                        <form action="{% url "menu:edit_menu" coffee_house.slug menu.slug %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="coffee_house_slug" value="{{ menu.slug }}">
+                            <button> Редактировать</button><br>
+                        </form>
+                        <form action="{% url "menu:item_add" coffee_house.slug menu.slug %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="coffee_house_slug" value="{{ menu.slug }}">
+                            <button> Добавить позицию</button><br>
+                        </form>
+                    </div>
+                    {% for item in items %}
+                        <div class="card">
+                            {% if item.photo %}
+                            <a href="{% url "menu:item_detail" coffee_house.slug menu.slug item.id%}"><img src="{% static item.photo %}" alt=""></a>
+                            {% endif %}
+                            <p><a href="{% url "menu:item_detail" coffee_house.slug menu.slug item.id%}">{{item.name}}</a></p> <br>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    {% if items %}
+                        <a href="{% url "menu:menu_detail" coffee_house.slug menu.slug%}" class="menu-a">
+                            <h2>{{menu.name}}</h2>
+                        </a>
+                        {% for item in items %}
+                            <div class="card">
+                                {% if item.photo %}
+                                <a href="{% url "menu:item_detail" coffee_house.slug menu.slug item.id%}"><img src="{% static item.photo %}" alt=""></a>
+                                {% endif %}
+                                <p><a href="{% url "menu:item_detail" coffee_house.slug menu.slug item.id%}">{{item.name}}</a></p> <br>
+                            </div>
+                        {% endfor %}
                     {% endif %}
-                    <p><a href="{% url "menu:item_detail" coffee_house.slug menu.slug item.slug%}">{{item.name}}</a></p> <br>
-
-                </div>
+            {% endif %}
             {% endfor %}
-        {% endfor %}
 
 
     {% endif %}

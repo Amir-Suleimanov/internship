@@ -8,6 +8,10 @@ class MenuForm(forms.ModelForm):
         model = Menu
         fields = ['name', 'coffee_house']
 
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'oninput': "this.size=Math.max(this.value.length, 20)"})
+        }
+
 class MenuItemForm(forms.ModelForm):
     class Meta:
         model = MenuItem

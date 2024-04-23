@@ -1,18 +1,45 @@
 {% extends "base.html" %}
 {% load static %}
 
+
+{% block title_head %}
+<title> Menu {{menu.name}}</title>
+{% endblock  %}
+
+
+{% block navbar_admin %}
+    <a href="{% url "menu:item_add" coffee_house_slug menu.slug%}"><span>Добавить позицию</span></a>
+{% endblock navbar_admin %}
+
+
 {% block title %}
     <h1><span>{{ menu.name }}</span></h1>
 {% endblock title %}
 
 {% block content %}
-{% for item in menuitems %}
-<div class="card">
-    {% if item.photo %}
-        <a href="{% url "menu:item_detail" coffee_house_slug menu.slug item.slug%}"><img src="{% static item.photo %}" alt=""></a>
+    {% if user.is_authenticated and user.is_superuser %}
+        {% for item in menuitems %}
+            <div class="card">
+                {% if item.photo %}
+                    <a href="{% url "menu:item_detail" coffee_house_slug menu.slug item.id%}"><img src="{% static item.photo %}" alt=""></a>
+                {% endif %}
+                <p><a href="{% url "menu:item_detail" coffee_house_slug menu.slug item.id%}">{{item.name}}</a></p> <br>
+                <p>Объём/кол-во: {{item.quantity}} {{item.unit}}</p>
+            </div>
+            <div class="card">
+            </div>
+        {% endfor %}
+    {% else %}
+        {% for item in menuitems %}
+            <div class="card">
+                {% if item.photo %}
+                    <a href="{% url "menu:item_detail" coffee_house_slug menu.slug item.id%}"><img src="{% static item.photo %}" alt=""></a>
+                {% endif %}
+                <p><a href="{% url "menu:item_detail" coffee_house_slug menu.slug item.id%}">{{item.name}}</a></p> <br>
+            </div>
+            <div class="card">
+            </div>
+        {% endfor %}
     {% endif %}
-    <p><a href="{% url "menu:item_detail" coffee_house_slug menu.slug item.slug%}">{{item.name}}</a></p> <br>
 
-</div>
-{% endfor %}
 {% endblock content %}
